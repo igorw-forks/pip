@@ -33,5 +33,5 @@ try {
   logging\info(get_class($e));
 }
 
-$listener->shutdown_and_close();
-$client->shutdown_and_close();
+$listener->close();
+$client->close();

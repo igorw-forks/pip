@@ -18,11 +18,10 @@ class ConnectionClosed extends SocketError { }
 
 class Socket {
   /**
-   * Shutdown and close socket.
+   * Close socket.
    */
-  function shutdown_and_close($max_retries = 2) {
+  function close($max_retries = 2) {
     $retries = 0;
-    socket_shutdown($this->socket, 2);
     retry:
     if (false === socket_close($this->socket)) {
       if ($this->error() == SOCKET_EINTR and
@@ -41,7 +40,7 @@ class Socket {
 }
 
 /**
- * The listening socket. 
+ * The listening socket.
  */
 class Listener extends Socket {
 
@@ -64,7 +63,7 @@ class Listener extends Socket {
    */
   function bind_and_listen($iface = '127.0.0.1', $port = 5000) {
     if (false === (
-      socket_set_option($this->socket, SOL_SOCKET, SO_REUSEADDR, 1) and 
+      socket_set_option($this->socket, SOL_SOCKET, SO_REUSEADDR, 1) and
       socket_set_option($this->socket, SOL_TCP, TCP_NODELAY, 1)
     )) logging\warning('Failed to set some socket options.');
     if (false === (

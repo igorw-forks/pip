@@ -93,7 +93,7 @@ class Http extends pip\base\SocketServer {
       logging\warning($e->getTraceAsString());
     }
     // finally
-    $conn->shutdown_and_close();
+    $conn->close();
     fclose($env['pip.input']);
   }
 
